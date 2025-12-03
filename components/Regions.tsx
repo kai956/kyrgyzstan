@@ -9,14 +9,14 @@ const regions = [
         id: "KG-B",
         name: "Batken",
         description: "Famous for its apricots and complex geography",
-        coordinates: { x: 15, y: 68 }, // Southwest region
+        coordinates: { x: 15, y: 82 }, // Southwest region
         image: "https://images.unsplash.com/photo-1518182170546-0766ce6fecde?q=80&w=2670&auto=format&fit=crop",
     },
     {
         id: "KG-C",
         name: "Chuy",
         description: "Northern gateway, home to Bishkek",
-        coordinates: { x: 48, y: 33 }, // North-central region
+        coordinates: { x: 48, y: 20 }, // North-central region
         image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2670&auto=format&fit=crop",
     },
     {
@@ -37,14 +37,14 @@ const regions = [
         id: "KG-O",
         name: "Osh",
         description: "Ancient Silk Road city",
-        coordinates: { x: 35, y: 64 }, // South-central region
+        coordinates: { x: 35, y: 70 }, // South-central region
         image: "https://images.unsplash.com/photo-1596323087332-959952230756?q=80&w=2574&auto=format&fit=crop",
     },
     {
         id: "KG-T",
         name: "Talas",
         description: "Birthplace of Manas",
-        coordinates: { x: 31, y: 36 }, // Northwest region
+        coordinates: { x: 28, y: 25 }, // Northwest region
         image: "https://images.unsplash.com/photo-1580136608260-4eb11f4b64fe?q=80&w=2676&auto=format&fit=crop",
     },
     {
@@ -70,10 +70,9 @@ export function Regions() {
             </div>
 
             <div className="absolute inset-0 flex items-center justify-center p-12">
-                {/* Map Container */}
-
+                {/* Map Container - Fixed sizing to prevent zoom issues */}
                 <motion.div
-                    className="relative h-full w-full max-w-6xl"
+                    className="relative w-[1200px] h-[600px] max-w-full"
                     animate={{
                         scale: selectedRegion ? 1.2 : 1,
                         opacity: selectedRegion ? 0.5 : 1,
@@ -95,6 +94,7 @@ export function Regions() {
                         <svg
                             viewBox="0 0 792 389"
                             className="absolute inset-0 h-full w-full"
+                            preserveAspectRatio="xMidYMid meet"
                         >
                             {regions.map((region) => (
                                 <g key={region.id}>

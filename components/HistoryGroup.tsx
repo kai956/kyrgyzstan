@@ -165,8 +165,8 @@ export function HistoryGroup() {
 
     return (
         <section className="flex h-screen w-full bg-zinc-950 text-white overflow-hidden">
-            {/* Left Timeline */}
-            <div className="flex w-2/5 flex-col p-12 pl-24 relative">
+            {/* Left Timeline - Fixed sizing to prevent zoom issues */}
+            <div className="flex w-2/5 min-w-[500px] flex-col p-12 pl-24 relative">
                 <h2 className="mb-16 font-serif text-5xl">Timeline</h2>
 
                 <div className="relative flex-1">
@@ -217,7 +217,7 @@ export function HistoryGroup() {
                                     transition={{ duration: 0.3 }}
                                 />
 
-                                <div className="flex-1">
+                                <div className="flex-1 min-w-0">
                                     <span className="block font-mono text-sm uppercase tracking-wider text-zinc-400 mb-2">
                                         {item.period}
                                     </span>

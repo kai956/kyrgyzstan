@@ -89,41 +89,42 @@ const culturalItems = [
 export function CulturalConnections() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    // Use spring animation for smooth transitions
-    const springConfig = { stiffness: 300, damping: 30 };
-    const animatedIndex = useSpring(currentIndex, springConfig);
-
-    // Transform the animated index to viewport width
-    const x = useTransform(animatedIndex, (value) => `${-value * 100}vw`);
-
-    // Smooth progress animation
-    const progress = useTransform(animatedIndex, [0, culturalItems.length - 1], [0, 1]);
+    const isLockedRef = useRef(false); // Use ref to persist across re-renders
 
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
-        let scrollTimeout: NodeJS.Timeout;
-
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault(); // Always prevent default to avoid page scroll
 
+            // Ignore all scroll input during lockout period
+            if (isLockedRef.current) return;
+
             const delta = e.deltaY || e.deltaX;
 
-            // Sensitive threshold
-            if (Math.abs(delta) > 5) {
-                clearTimeout(scrollTimeout);
+            // Only respond to meaningful scroll (not accidental tiny movements)
+            if (Math.abs(delta) < 3) return;
 
-                scrollTimeout = setTimeout(() => {
-                    if (delta > 0 && currentIndex < culturalItems.length - 1) {
-                        // Scroll down/right - next card
-                        setCurrentIndex(prev => prev + 1);
-                    } else if (delta < 0 && currentIndex > 0) {
-                        // Scroll up/left - previous card
-                        setCurrentIndex(prev => prev - 1);
+            // Determine direction and move exactly ONE card
+            if (delta > 0) {
+                setCurrentIndex(prev => {
+                    if (prev < culturalItems.length - 1) {
+                        isLockedRef.current = true;
+                        setTimeout(() => { isLockedRef.current = false; }, 1500);
+                        return prev + 1;
                     }
-                }, 50);
+                    return prev;
+                });
+            } else if (delta < 0) {
+                setCurrentIndex(prev => {
+                    if (prev > 0) {
+                        isLockedRef.current = true;
+                        setTimeout(() => { isLockedRef.current = false; }, 1500);
+                        return prev - 1;
+                    }
+                    return prev;
+                });
             }
         };
 
@@ -131,9 +132,8 @@ export function CulturalConnections() {
 
         return () => {
             container.removeEventListener('wheel', handleWheel);
-            clearTimeout(scrollTimeout);
         };
-    }, [currentIndex]);
+    }, []); // Empty dependency array - only set up once!
 
     // Keyboard navigation
     useEffect(() => {
@@ -162,7 +162,15 @@ export function CulturalConnections() {
             <div className="absolute inset-0 flex items-center overflow-hidden">
                 <motion.div
                     className="flex h-full"
-                    style={{ x }}
+                    animate={{
+                        x: `-${currentIndex * 100}vw`
+                    }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 25,
+                        mass: 1
+                    }}
                 >
                     {/* Cultural Items */}
                     {culturalItems.map((item, index) => (
@@ -198,16 +206,6 @@ export function CulturalConnections() {
                 </motion.div>
             </div>
 
-            {/* Bottom Progress Line */}
-            <div className="absolute bottom-32 left-24 right-24 h-px bg-zinc-800 z-20">
-                <motion.div
-                    className="h-full bg-white origin-left"
-                    style={{
-                        scaleX: progress,
-                    }}
-                />
-            </div>
-
             {/* Card Counter */}
             <div className="absolute bottom-32 right-32 z-20">
                 <p className="text-white text-sm font-mono">
@@ -218,7 +216,7 @@ export function CulturalConnections() {
             {/* Navigation Hint */}
             <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 text-center">
                 <p className="text-zinc-500 text-sm font-mono">
-                    Scroll or use arrow keys to explore
+                    Scroll
                 </p>
             </div>
         </section>

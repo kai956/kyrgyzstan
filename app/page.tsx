@@ -7,7 +7,6 @@ import { HistoryGroup } from "@/components/HistoryGroup";
 import { Regions } from "@/components/Regions";
 import { CulturalConnections } from "@/components/CulturalConnections";
 import { Sports } from "@/components/Sports";
-import { AdditionalSections } from "@/components/AdditionalSections";
 import { Intro } from "@/components/Intro";
 import { SlideContainer } from "@/components/SlideContainer";
 import { ChevronRight, ChevronLeft } from "lucide-react";
@@ -18,7 +17,6 @@ const slides = [
   { id: "regions", component: Regions },
   { id: "culture", component: CulturalConnections },
   { id: "sports", component: Sports },
-  { id: "more", component: AdditionalSections },
 ];
 
 export default function Home() {
