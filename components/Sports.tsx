@@ -8,84 +8,95 @@ const sports = [
         title: "Kok-Boru",
         subtitle: "The Grey Wolf",
         description: "Traditional horse game where riders compete to carry a goat carcass to the opponent's goal. A test of strength, horsemanship, and teamwork that has been passed down through generations of nomadic warriors.",
-        image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=2671&auto=format&fit=crop", // Horses running - warm tones
+        image: "/kok boru .jpg",
     },
     {
         id: "er-enish",
         title: "Er Enish",
         subtitle: "Wrestling on Horseback",
         description: "Wrestlers grapple on horseback trying to pull the opponent to the ground. A display of raw strength, balance, and the deep bond between rider and horse.",
-        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2670&auto=format&fit=crop", // Mountains - blue/purple tones
+        image: "/erenish.png",
     },
     {
-        id: "salbuurun",
-        title: "Salbuurun",
+        id: "salburun",
+        title: "Salburun",
         subtitle: "Eagle Hunting",
         description: "Ancient tradition of hunting with trained golden eagles and falcons. A sacred partnership between human and bird of prey, requiring years of patience and mutual respect.",
-        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2670&auto=format&fit=crop", // Mountain landscape - golden hour
+        image: "/salburun2.jpg",
     },
     {
-        id: "kyz-kuumai",
-        title: "Kyz Kuumai",
-        subtitle: "Kiss the Girl",
-        description: "Romantic horse game where a young man chases a young woman to win a kiss. If he fails, she chases him back with a whip. A playful test of horsemanship and courtship.",
-        image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2674&auto=format&fit=crop", // Nature/forest - green tones
+        id: "at-chabysh",
+        title: "At Chabysh",
+        subtitle: "Horse Racing",
+        description: "Long-distance horse racing across the steppe. A test of endurance for both rider and horse, celebrating the speed and stamina of Kyrgyz horses.",
+        image: "/at chabysh.jpg",
+    },
+    {
+        id: "alysh",
+        title: "Alysh",
+        subtitle: "Traditional Wrestling",
+        description: "Kyrgyz belt wrestling where opponents try to throw each other to the ground. A test of technique, strength, and agility rooted in ancient traditions.",
+        image: "/alysh.png",
+    },
+    {
+        id: "chucko",
+        title: "Chucko",
+        subtitle: "Traditional Game",
+        description: "A traditional Kyrgyz game that tests skill, precision, and cultural knowledge passed down through generations.",
+        image: "/checko.png",
     },
 ];
 
 export function Sports() {
     return (
         <section id="sports" className="relative bg-zinc-950">
-            {/* Fixed Title */}
-            <div className="sticky top-0 z-20 bg-gradient-to-b from-zinc-950 via-zinc-950/95 to-transparent pt-24 pb-16">
-                <h2 className="text-center font-serif text-5xl md:text-6xl text-white">
+            {/* Title */}
+            <div className="text-center pt-24 pb-12 relative z-10 bg-zinc-950">
+                <h2 className="font-serif text-5xl md:text-6xl text-white">
                     Nomadic Games
                 </h2>
             </div>
 
-            {/* Scrollable Games */}
+            {/* Stacking Games */}
             <div className="relative">
                 {sports.map((sport, index) => {
                     const isLeft = index % 2 === 0;
+                    const isFirst = index === 0;
 
                     return (
-                        <div key={sport.id} className="relative min-h-screen flex items-center">
-                            {/* Background Image with Blur Transition */}
-                            <div className="absolute inset-0 z-0">
-                                <div
-                                    className="absolute inset-0 bg-cover bg-center"
-                                    style={{ backgroundImage: `url(${sport.image})` }}
-                                />
-                                {/* Dark overlay */}
-                                <div className="absolute inset-0 bg-black/50" />
-
-                                {/* Blur transition at top and bottom */}
-                                <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent" />
-                                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent" />
-                            </div>
-
+                        <div
+                            key={sport.id}
+                            className={`min-h-screen flex items-center justify-center bg-zinc-950 py-24 ${isFirst ? '-mt-32' : ''
+                                }`}
+                        >
                             {/* Content */}
-                            <div className="relative z-10 w-full px-8 md:px-16 lg:px-24 py-20">
-                                <motion.div
-                                    initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.8 }}
-                                    viewport={{ once: false, amount: 0.3 }}
-                                    className={`max-w-2xl ${isLeft ? 'mr-auto' : 'ml-auto'}`}
-                                >
-                                    {/* Text Container without Backdrop Blur */}
-                                    <div className="bg-black/60 rounded-2xl p-8 md:p-12 border border-white/10">
-                                        <span className="block font-mono text-sm uppercase tracking-widest text-zinc-400 mb-3">
+                            <div className={`relative z-10 max-w-7xl w-full px-8 md:px-16 flex flex-col md:flex-row items-stretch gap-16 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
+                                }`}>
+                                {/* Image */}
+                                <div className={`flex-1 flex ${isLeft ? 'justify-end' : 'justify-start'}`}>
+                                    <div className="w-[500px] h-[350px] relative overflow-hidden rounded-lg shadow-2xl">
+                                        <img
+                                            src={sport.image}
+                                            alt={sport.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Text */}
+                                <div className={`flex-1 flex flex-col justify-between h-[350px] py-2 ${isLeft ? 'items-start' : 'items-end'}`}>
+                                    <div className={`flex flex-col ${isLeft ? 'items-start text-left' : 'items-end text-right'}`}>
+                                        <span className="block font-mono text-sm uppercase tracking-widest text-zinc-400 mb-4">
                                             {sport.subtitle}
                                         </span>
-                                        <h3 className="font-serif text-4xl md:text-5xl text-white mb-6 leading-tight">
+                                        <h3 className="font-serif text-5xl md:text-6xl text-white leading-tight">
                                             {sport.title}
                                         </h3>
-                                        <p className="text-lg text-zinc-300 leading-relaxed">
-                                            {sport.description}
-                                        </p>
                                     </div>
-                                </motion.div>
+                                    <p className={`text-lg text-zinc-300 leading-relaxed max-w-md ${isLeft ? 'text-left' : 'text-right'}`}>
+                                        {sport.description}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     );

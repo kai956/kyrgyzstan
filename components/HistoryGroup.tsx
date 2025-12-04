@@ -12,7 +12,7 @@ const timelineData = [
         title: "Yenisei Kyrgyz",
         period: "6th-9th Century",
         description: "Originating in the Yenisei River valley, establishing the Kyrgyz Khaganate.",
-        image: "https://images.unsplash.com/photo-1518182170546-0766ce6fecde?q=80&w=2670&auto=format&fit=crop",
+        image: "/yenisey kyrgyz .png",
     },
     {
         id: "manas",
@@ -20,7 +20,7 @@ const timelineData = [
         title: "Epic of Manas",
         period: "Legendary Era",
         description: "The story of the hero Manas uniting the Kyrgyz people. 20 times longer than the Odyssey.",
-        image: "https://images.unsplash.com/photo-1596323087332-959952230756?q=80&w=2574&auto=format&fit=crop",
+        image: "/manas.png",
     },
     {
         id: "migration",
@@ -28,7 +28,7 @@ const timelineData = [
         title: "The Great Migration",
         period: "10th-15th Century",
         description: "Journey from Yenisei to the Tian Shan mountains.",
-        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2670&auto=format&fit=crop",
+        image: "/kyrgyz-history.jpg",
     },
     {
         id: "mongol",
@@ -36,7 +36,7 @@ const timelineData = [
         title: "Mongol Era",
         period: "13th-15th Century",
         description: "Part of the Mongol Empire, shaping political organization.",
-        image: "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?q=80&w=2574&auto=format&fit=crop",
+        image: "/mongol.jpg",
     },
     {
         id: "russian",
@@ -44,7 +44,7 @@ const timelineData = [
         title: "Russian Empire",
         period: "1876-1917",
         description: "Incorporation into the Russian Empire and changes to nomadic life.",
-        image: "https://images.unsplash.com/photo-1580136608260-4eb11f4b64fe?q=80&w=2676&auto=format&fit=crop",
+        image: "/russian empire .jpg",
     },
     {
         id: "soviet",
@@ -52,7 +52,7 @@ const timelineData = [
         title: "Soviet Period",
         period: "1917-1991",
         description: "Transformation from nomadic life to industrialization and socialism.",
-        image: "https://images.unsplash.com/photo-1596323087332-959952230756?q=80&w=2574&auto=format&fit=crop",
+        image: "/soviet.jpg",
     },
     {
         id: "independence",
@@ -60,7 +60,7 @@ const timelineData = [
         title: "Independence",
         period: "1991-Present",
         description: "Sovereignty, democratic transitions, and modern challenges.",
-        image: "https://images.unsplash.com/photo-1627320499039-65239a2636d7?q=80&w=2670&auto=format&fit=crop",
+        image: "/independance .png",
     },
 ];
 
@@ -166,7 +166,7 @@ export function HistoryGroup() {
     return (
         <section className="flex h-screen w-full bg-zinc-950 text-white overflow-hidden">
             {/* Left Timeline - Fixed sizing to prevent zoom issues */}
-            <div className="flex w-2/5 min-w-[500px] flex-col p-12 pl-24 relative">
+            <div className="flex w-1/3 min-w-[450px] flex-col p-12 pl-20 relative">
                 <h2 className="mb-16 font-serif text-5xl">Timeline</h2>
 
                 <div className="relative flex-1">
@@ -257,7 +257,7 @@ export function HistoryGroup() {
             </div>
 
             {/* Right Content */}
-            <div className="relative w-3/5 overflow-hidden">
+            <div className="relative w-2/3 overflow-hidden">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={currentItem.id}
@@ -268,14 +268,18 @@ export function HistoryGroup() {
                         className="absolute inset-0"
                     >
                         {/* Background Image */}
-                        <div
-                            className="absolute inset-0 bg-cover bg-center opacity-40"
-                            style={{ backgroundImage: `url(${currentItem.image})` }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent" />
+                        <div className="absolute inset-0 opacity-40">
+                            <img
+                                src={currentItem.image}
+                                alt={currentItem.title}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                        {/* Gradient overlay - starts from left, transitions to transparent earlier to show more photo */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 from-0% via-zinc-950/80 via-30% to-transparent to-60%" />
 
                         {/* Content */}
-                        <div className="relative flex h-full flex-col justify-center p-24">
+                        <div className="relative flex h-full flex-col justify-center p-16 pl-12">
                             <motion.span
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}

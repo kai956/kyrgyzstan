@@ -10,49 +10,49 @@ const regions = [
         name: "Batken",
         description: "Famous for its apricots and complex geography",
         coordinates: { x: 15, y: 82 }, // Southwest region
-        image: "https://images.unsplash.com/photo-1518182170546-0766ce6fecde?q=80&w=2670&auto=format&fit=crop",
+        image: "/batken.jpg",
     },
     {
         id: "KG-C",
         name: "Chuy",
         description: "Northern gateway, home to Bishkek",
         coordinates: { x: 48, y: 20 }, // North-central region
-        image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2670&auto=format&fit=crop",
+        image: "/bishkek.jpg",
     },
     {
         id: "KG-J",
         name: "Jalal-Abad",
         description: "World's largest natural walnut forest",
         coordinates: { x: 33, y: 48 }, // West-central region
-        image: "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?q=80&w=2574&auto=format&fit=crop",
+        image: "/djalalabad.jpg",
     },
     {
         id: "KG-N",
         name: "Naryn",
         description: "Land of celestial mountains",
         coordinates: { x: 48, y: 45 }, // Central-east region
-        image: "https://images.unsplash.com/photo-1627320499039-65239a2636d7?q=80&w=2670&auto=format&fit=crop",
+        image: "/kelsuu.jpg",
     },
     {
         id: "KG-O",
         name: "Osh",
         description: "Ancient Silk Road city",
         coordinates: { x: 35, y: 70 }, // South-central region
-        image: "https://images.unsplash.com/photo-1596323087332-959952230756?q=80&w=2574&auto=format&fit=crop",
+        image: "/osh.jpg",
     },
     {
         id: "KG-T",
         name: "Talas",
         description: "Birthplace of Manas",
         coordinates: { x: 28, y: 25 }, // Northwest region
-        image: "https://images.unsplash.com/photo-1580136608260-4eb11f4b64fe?q=80&w=2676&auto=format&fit=crop",
+        image: "/talas.jpg",
     },
     {
         id: "KG-Y",
         name: "Ysyk-Köl",
         description: "The Pearl of Central Asia",
         coordinates: { x: 72, y: 33 }, // Northeast region (lake area)
-        image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=2671&auto=format&fit=crop",
+        image: "/yssyk kul .jpg",
     },
 ];
 
@@ -152,10 +152,13 @@ export function Regions() {
 
                         {regions.filter(r => r.id === selectedRegion).map(region => (
                             <div key={region.id} className="flex h-full flex-col justify-center">
-                                <div
-                                    className="mb-8 h-64 w-full rounded-2xl bg-cover bg-center"
-                                    style={{ backgroundImage: `url(${region.image})` }}
-                                />
+                                <div className="mb-8 h-64 w-full rounded-2xl overflow-hidden">
+                                    <img
+                                        src={region.image}
+                                        alt={region.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
                                 <h2 className="mb-4 font-serif text-5xl text-white">{region.name}</h2>
                                 <p className="text-xl text-zinc-300">{region.description}</p>
                             </div>
