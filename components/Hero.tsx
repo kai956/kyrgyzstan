@@ -1,9 +1,11 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { Play, X } from "lucide-react";
 
 export function Hero() {
+    const [showVideo, setShowVideo] = useState(false);
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -31,6 +33,15 @@ export function Hero() {
                 />
             </motion.div>
 
+            {/* Flag Background */}
+            <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                <img
+                    src="/flag.png"
+                    alt=""
+                    className="w-[700px] h-[700px] object-cover opacity-10 mix-blend-overlay"
+                />
+            </div>
+
             <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">
                 <motion.h1
                     style={{ y: textY }}
@@ -52,6 +63,17 @@ export function Hero() {
                     Journey Through the Land of Celestial Mountains
                 </motion.p>
 
+                {/* Watch Video Button */}
+                <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+                    onClick={() => setShowVideo(true)}
+                    className="group mt-8 rounded-full border border-white/10 bg-black/20 px-6 py-3 backdrop-blur-md transition-all hover:bg-white/10"
+                >
+                    <span className="text-2xl font-serif font-bold text-white">Watch Video</span>
+                </motion.button>
+
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -61,6 +83,26 @@ export function Hero() {
 
                 </motion.div>
             </div>
+
+            {/* Video Modal */}
+            {showVideo && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
+                    <button
+                        onClick={() => setShowVideo(false)}
+                        className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+                    >
+                        <X className="h-8 w-8" />
+                    </button>
+                    <div className="relative w-full max-w-6xl aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/10">
+                        <video
+                            src="/land.mp4"
+                            className="w-full h-full object-cover"
+                            controls
+                            autoPlay
+                        />
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
